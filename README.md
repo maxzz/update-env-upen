@@ -1,6 +1,7 @@
 # update-env-upen
 
-A TypeScript CLI utility that automatically updates environment variables in `.env` files across your project. It updates variables containing `_MODIFIED` with the current date and increments build numbers for variables containing `_BUILD`.
+A upen (update environment) utility that automatically updates environment variables in `.env` files across your project.
+It updates variables containing `_MODIFIED` with the current date and increments build numbers for variables containing `_BUILD`.
 
 ## Features
 
@@ -179,6 +180,9 @@ pnpm run build
 
 # Publish to npm (requires npm login)
 npm publish
+
+# Or test publishing with pnpm
+npm pack --dry-run
 
 # Or publish with pnpm
 pnpm publish

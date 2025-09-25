@@ -2,37 +2,37 @@ import { Command } from 'commander';
 import * as path from 'path';
 
 export interface CLIOptions {
-  folder: string;
-  verbose: boolean;
+    folder: string;
+    verbose: boolean;
 }
 
 export function parseArguments(): CLIOptions {
-  const program = new Command();
-  
-  program
-    .name('update-env-upen')
-    .description('Update .env files with current date for _MODIFIED variables and increment build numbers for _BUILD variables')
-    .version('1.0.0')
-    .argument('[folder]', 'Target folder to search for .env files', process.cwd())
-    .option('-v, --verbose', 'Enable verbose output', false)
-    .helpOption('-h, --help', 'Display help for command');
+    const program = new Command();
 
-  program.parse();
+    program
+        .name('update-env-upen')
+        .description('Update .env files with current date for _MODIFIED variables and increment build numbers for _BUILD variables')
+        .version('1.0.0')
+        .argument('[folder]', 'Target folder to search for .env files', process.cwd())
+        .option('-v, --verbose', 'Enable verbose output', false)
+        .helpOption('-h, --help', 'Display help for command');
 
-  const options = program.opts();
-  const folder = program.args[0] || process.cwd();
+    program.parse();
 
-  // Resolve to absolute path
-  const absoluteFolder = path.resolve(folder);
+    const options = program.opts();
+    const folder = program.args[0] || process.cwd();
 
-  return {
-    folder: absoluteFolder,
-    verbose: options.verbose
-  };
+    // Resolve to absolute path
+    const absoluteFolder = path.resolve(folder);
+
+    return {
+        folder: absoluteFolder,
+        verbose: options.verbose
+    };
 }
 
 export function showHelp(): void {
-  console.log(`
+    console.log(`
 Usage: update-env-upen [folder] [options]
 
 Update .env files in the specified folder (or current directory) with:
