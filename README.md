@@ -1,11 +1,11 @@
-# update-env-upen
+# upen
 
-A CLI utility to update .env files with current date and build numbers.
+A CLI utility to update .env files with current date and build numbers. upen stands for "update env".
 
 ## Installation
 
 ```bash
-npm install -g update-env-upen
+npm install -g upen
 ```
 
 ## Usage
