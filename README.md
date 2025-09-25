@@ -1,6 +1,6 @@
-# update-env-upen
+# upen
 
-A upen (update environment) utility that automatically updates environment variables in `.env` files across your project.
+The upen (update environment) utility that automatically updates environment variables in `.env` files across your project.
 It updates variables containing `_MODIFIED` with the current date and increments build numbers for variables containing `_BUILD`.
 
 ## Features
@@ -17,9 +17,9 @@ It updates variables containing `_MODIFIED` with the current date and increments
 ### Global Installation
 
 ```bash
-npm install -g update-env-upen
+npm install -g upen
 # or using pnpm
-pnpm add -g update-env-upen
+pnpm add -g upen
 ```
 
 ### Local Development Installation
@@ -27,7 +27,7 @@ pnpm add -g update-env-upen
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/update-env-upen.git
-cd update-env-upen
+cd upen
 
 # Install dependencies using pnpm
 pnpm install
@@ -42,32 +42,32 @@ pnpm run build
 
 ```bash
 # Update .env files in current directory
-update-env-upen
+upen
 
 # Update .env files in specific directory
-update-env-upen /path/to/project
+upen /path/to/project
 
 # Enable verbose output
-update-env-upen --verbose
+upen --verbose
 
 # Show help
-update-env-upen --help
+upen --help
 ```
 
 ### Examples
 
 ```bash
 # Update all .env files in current project
-update-env-upen
+upen
 
 # Update .env files in a specific project folder
-update-env-upen ./my-project
+upen ./my-project
 
 # Run with verbose output to see detailed information
-update-env-upen --verbose
+upen --verbose
 
 # Update .env files in parent directory
-update-env-upen ../other-project
+upen ../other-project
 ```
 
 ## Environment Variable Patterns
@@ -146,7 +146,7 @@ pnpm run test
 ### Project Structure
 
 ```
-update-env-upen/
+upen/
 ├── src/
 │   ├── main.ts      # Main CLI logic
 │   └── arg.ts       # Argument parsing and help
@@ -193,7 +193,7 @@ pnpm publish
 The utility also exports functions that can be used programmatically:
 
 ```typescript
-import { processEnvFile, findEnvFiles } from 'update-env-upen';
+import { processEnvFile, findEnvFiles } from 'upen';
 
 // Find all .env files in a directory
 const envFiles = findEnvFiles('/path/to/project');
