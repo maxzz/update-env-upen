@@ -5,10 +5,9 @@
       "name": "Debug CLI",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main.ts",
+      "program": "${workspaceFolder}/dist/main.js",
       "args": ["--verbose"],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "runtimeArgs": ["-r", "ts-node/register"],
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"
@@ -16,16 +15,19 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "build"
+      }
     },
     {
       "name": "Debug CLI with Custom Folder",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/src/main.ts",
+      "program": "${workspaceFolder}/dist/main.js",
       "args": ["${workspaceFolder}", "--verbose"],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "runtimeArgs": ["-r", "ts-node/register"],
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"
@@ -33,7 +35,11 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "build"
+      }
     },
     {
       "name": "Debug Built CLI",
@@ -48,7 +54,27 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "build"
+      }
+    },
+    {
+      "name": "Debug TypeScript (requires ts-node)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/main.ts",
+      "args": ["--verbose"],
+      "runtimeArgs": ["-r", "ts-node/register"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "sourceMaps": false
     }
   ]
 }

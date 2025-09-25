@@ -166,11 +166,17 @@ upen/
 
 The project includes VS Code debug configurations in `.vscode/launch.json`:
 
-1. **Debug CLI**: Debug TypeScript source directly
-2. **Debug CLI with Custom Folder**: Debug with a specific target folder
-3. **Debug Built CLI**: Debug the compiled JavaScript version
+1. **Debug CLI**: Debug the compiled JavaScript with source maps (auto-builds before debugging)
+2. **Debug CLI with Custom Folder**: Debug with a specific target folder (auto-builds before debugging)  
+3. **Debug Built CLI**: Debug the compiled JavaScript version (auto-builds before debugging)
+4. **Debug TypeScript**: Debug TypeScript directly (requires installing `ts-node` as dev dependency)
 
-Press `F5` in VS Code to start debugging.
+Press `F5` in VS Code to start debugging. The first three configurations will automatically build the project before debugging.
+
+To use the TypeScript debugging option, install ts-node:
+```bash
+pnpm add -D ts-node
+```
 
 ### Building and Publishing
 
