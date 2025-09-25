@@ -1,0 +1,28 @@
+# Source files (only dist should be published)
+src/
+tsconfig.json
+
+# Development files
+.gitignore
+.env*
+*.test.ts
+*.spec.ts
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+
+# Node modules (should never be published)
+node_modules/
