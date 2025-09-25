@@ -1,0 +1,41 @@
+{
+    "name": "upen",
+    "version": "1.0.0",
+    "description": "A CLI utility to update .env files with current date for _MODIFIED variables and increment build numbers for _BUILD variables",
+    "author": "Sonnet 4 and Max Zakharzhevski",
+    "license": "MIT",
+    "keywords": [
+        "cli",
+        "env",
+        "environment",
+        "build",
+        "automation",
+        "typescript"
+    ],
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "main": "dist/main.js",
+    "bin": {
+        "upen": "bin/cli.js"
+    },
+    "files": [
+        "dist/",
+        "bin/",
+        "README.md"
+    ],
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "commander": "^11.0.0"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "prepublishOnly": "pnpm run build",
+        "test": "node dist/main.js",
+        "start": "node dist/main.js"
+    }
+}

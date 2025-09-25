@@ -1,0 +1,36 @@
+# Source files (only ship built files)
+src/
+tsconfig.json
+.vscode/
+
+# Development dependencies
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# Development files
+.gitignore
+*.test.js
+*.test.ts
+test/
+tests/
+__tests__/
+
+# Build artifacts we don't want to ship
+*.tsbuildinfo
+coverage/
+.nyc_output
+
+# OS and editor files
+.DS_Store
+.idea/
+*.swp
+*.swo
+
+# Environment files
+.env*
+
+# Logs
+logs/
+*.log
