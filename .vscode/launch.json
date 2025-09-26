@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug CLI",
+      "name": "CLI",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/dist/main.js",
@@ -22,7 +22,26 @@
       }
     },
     {
-      "name": "Debug CLI with Custom Folder",
+      "name": "CLI w/ verbose",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/dist/main.js",
+      "args": ["--verbose"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "sourceMaps": true,
+      "preLaunchTask": {
+        "type": "npm",
+        "script": "build"
+      }
+    },
+    {
+      "name": "CLI w/ folder",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/dist/main.js",
@@ -42,26 +61,7 @@
       }
     },
     {
-      "name": "Debug Built CLI",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/dist/main.js",
-      "args": ["--verbose"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": true,
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "build"
-      }
-    },
-    {
-      "name": "Debug TypeScript (requires ts-node)",
+      "name": "CLI w/ ts-node",
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/src/main.ts",
