@@ -5,108 +5,59 @@
       "name": "CLI w/ tsx",
       "type": "node",
       "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**",
+      ],
+      "runtimeExecutable": "tsx",
       "program": "${workspaceFolder}/src/main.ts",
       "args": ["${workspaceFolder}", "--verbose"],
-      "runtimeExecutable": "tsx",
+      //"args": ["--verbose"],
+
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"
       },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": false
+      //"sourceMaps": false
     },
     {
       "name": "CLI",
       "type": "node",
       "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "program": "${workspaceFolder}/dist/main.js",
       "args": ["--verbose"],
+      //"args": ["${workspaceFolder}", "--verbose"],
+
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"
       },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": true,
       "preLaunchTask": {
         "type": "npm",
         "script": "build"
-      }
-    },
-    {
-      "name": "CLI w/ verbose",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/dist/main.js",
-      "args": ["--verbose"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
       },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
       "sourceMaps": true,
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "build"
-      }
-    },
-    {
-      "name": "CLI w/ folder",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/dist/main.js",
-      "args": ["${workspaceFolder}", "--verbose"],
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": true,
-      "preLaunchTask": {
-        "type": "npm",
-        "script": "build"
-      }
     },
     {
       "name": "CLI w/ ts-node",
       "type": "node",
       "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
       "program": "${workspaceFolder}/src/main.ts",
       "args": ["--verbose"],
       "runtimeArgs": ["-r", "ts-node/register"],
+
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"
       },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": false
-    },
-    {
-      "name": "CLI w/ tsx",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/src/main.ts",
-      "args": ["--verbose"],
-      "runtimeExecutable": "tsx",
-      "console": "integratedTerminal",
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "sourceMaps": false
+      "sourceMaps": false,
     }
   ]
 }
