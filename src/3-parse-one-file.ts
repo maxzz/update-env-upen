@@ -81,9 +81,17 @@ function getCurrentDate(): string {
 }
 
 function incrementBuildNumber(value: string): string {
+    const version = value.split('.');
+    if (version.length) {
+        const patch = parseInt(version[version.length - 1] || '0', 10);
+        version.pop();
+        version.push(`${patch + 1}`);
+        return version.join('.');
+    }
+
     // Extract number from the value, default to 0 if not found
     const match = value.match(/\d+/);
-    const currentNumber = match ? parseInt(match[0], 10) : 0;
+    const currentNumber = match ? parseInt(match[0], 10) : 0; // That will replace the first number only but keep the rest
     const newNumber = currentNumber + 1;
 
     // Replace the number in the original string, or append if no number found

@@ -6,8 +6,8 @@ It updates variables containing `_MODIFIED` with the current date and increments
 ## Features
 
 - 🔍 **Recursive Search**: Finds all `.env` files in the specified directory and subdirectories
-- 📅 **Date Updates**: Automatically updates variables with `_MODIFIED` in their name to the current date (YYYY-MM-DD format)
-- 🔢 **Build Number Increment**: Automatically increments build numbers for variables with `_BUILD` or `BUILD_` in their name
+- 📅 **Date Updates**: Automatically updates variables with `_MODIFIED` in their name to the current date (ISO format)
+- 🔢 **Smart Build Number Increment**: Automatically increments build numbers for variables with `_BUILD` or `BUILD_` in their name. Handles both semantic versions (1.2.3 → 1.2.4) and simple numbers (42 → 43)
 - 🎯 **Smart Parsing**: Ignores comments and empty lines, only processes valid environment variables
 - 📊 **Detailed Output**: Shows exactly what was changed in each file
 - 🛡️ **Safe Operations**: Only modifies variables that match the specified patterns
@@ -70,6 +70,36 @@ upen --verbose
 upen ../other-project
 ```
 
+### Real-world Usage Examples
+
+Consider a typical project with multiple `.env` files:
+
+**Before running upen:**
+```env
+# .env
+LAST_MODIFIED=2024-01-15T08:00:00.000Z
+BUILD_NUMBER=142
+API_VERSION_BUILD=2.3.1
+DOCKER_BUILD_TAG=v1.0.5
+
+# .env.production  
+PROD_MODIFIED_DATE=2024-01-10T12:00:00.000Z
+RELEASE_BUILD=3.2.8
+```
+
+**After running `upen --verbose`:**
+```env
+# .env
+LAST_MODIFIED=2025-09-26T10:30:45.123Z
+BUILD_NUMBER=143
+API_VERSION_BUILD=2.3.2
+DOCKER_BUILD_TAG=v1.0.6
+
+# .env.production
+PROD_MODIFIED_DATE=2025-09-26T10:30:45.123Z
+RELEASE_BUILD=3.2.9
+```
+
 ## Environment Variable Patterns
 
 ### Date Updates (`_MODIFIED`)
@@ -85,28 +115,76 @@ CONFIG_MODIFIED=never
 
 **After:**
 ```env
-LAST_MODIFIED=2024-12-25
-APP_MODIFIED_DATE=2024-12-25
-CONFIG_MODIFIED=2024-12-25
+LAST_MODIFIED=2025-09-26T10:30:45.123Z
+APP_MODIFIED_DATE=2025-09-26T10:30:45.123Z
+CONFIG_MODIFIED=2025-09-26T10:30:45.123Z
 ```
 
 ### Build Number Increment (`_BUILD` or `BUILD_`)
 
-Variables containing `_BUILD` or `BUILD_` in their name will have their numeric value incremented:
+Variables containing `_BUILD` or `BUILD_` in their name will have their numeric value incremented. The function intelligently handles different formats:
 
+#### Semantic Versions (dot-separated)
+**Before:**
+```env
+VERSION_BUILD=1.2.3
+APP_BUILD_VERSION=2.1.0
+RELEASE_BUILD=0.5.12
+```
+
+**After:**
+```env
+VERSION_BUILD=1.2.4
+APP_BUILD_VERSION=2.1.1
+RELEASE_BUILD=0.5.13
+```
+
+#### Simple Numbers
 **Before:**
 ```env
 BUILD_NUMBER=42
 APP_BUILD=100
-VERSION_BUILD=1.2.3
+PATCH_BUILD=5
 ```
 
 **After:**
 ```env
 BUILD_NUMBER=43
 APP_BUILD=101
-VERSION_BUILD=1.2.4
+PATCH_BUILD=6
 ```
+
+#### Mixed Formats
+**Before:**
+```env
+BUILD_TAG=v1.2.3
+BUILD_PREFIX=build-42
+BUILD_SUFFIX=100-beta
+```
+
+**After:**
+```env
+BUILD_TAG=v1.2.4
+BUILD_PREFIX=build-43
+BUILD_SUFFIX=101-beta
+```
+
+## Build Number Increment Logic
+
+The `incrementBuildNumber()` function uses smart logic to handle different version formats:
+
+1. **Semantic Version Detection**: If the value contains dots (e.g., `1.2.3`), it treats it as a semantic version:
+   - Splits the version by dots: `"1.2.3"` → `["1", "2", "3"]`
+   - Increments the last part: `["1", "2", "3"]` → `["1", "2", "4"]`
+   - Rejoins with dots: `["1", "2", "4"]` → `"1.2.4"`
+
+2. **Simple Number Fallback**: If no dots are found, it looks for the first number in the string:
+   - Finds the first numeric sequence: `"build-42-beta"` → `42`
+   - Increments it: `42` → `43`
+   - Replaces the original number: `"build-42-beta"` → `"build-43-beta"`
+
+3. **No Number Found**: If no numbers exist, it appends `1` to the end:
+   - `"beta"` → `"beta1"`
 
 ## File Discovery
 
@@ -151,13 +229,15 @@ pnpm run test
 ```
 upen/
 ├── src/
-│   ├── main.ts      # Main CLI logic
-│   └── arg.ts       # Argument parsing and help
+│   ├── main.ts                # Main CLI logic
+│   ├── arg.ts                 # Argument parsing and help
+│   └── 3-parse-one-file.ts    # Enhanced .env file processing
 ├── bin/
-│   └── cli.js       # Executable entry point
-├── dist/            # Built JavaScript files (generated)
+│   └── cli.js                 # Executable entry point
+├── dist/                      # Built JavaScript files (generated)
 ├── .vscode/
-│   └── launch.json  # VS Code debug configuration
+│   ├── launch.json            # VS Code debug configuration
+│   └── tasks.json             # VS Code tasks
 ├── package.json
 ├── tsconfig.json
 ├── .gitignore
@@ -230,16 +310,19 @@ const updates = processEnvFile('/path/to/.env', true); // true for verbose
 ✅ Updated: /home/user/my-project/backend/.env
 ℹ️  No changes needed: /home/user/my-project/.env.local
 
-🎉 Successfully updated 3 variable(s) in 3 file(s):
+🎉 Successfully updated 4 variable(s) in 3 file(s):
    📝 .env:5
       - LAST_MODIFIED=2023-12-01
-      + LAST_MODIFIED=2024-12-25
+      + LAST_MODIFIED=2025-09-26T10:30:45.123Z
    📝 .env:8
       - BUILD_NUMBER=42
       + BUILD_NUMBER=43
+   📝 .env:9
+      - VERSION_BUILD=1.2.3
+      + VERSION_BUILD=1.2.4
    📝 backend/.env:3
-      - API_BUILD=100
-      + API_BUILD=101
+      - API_BUILD=2.1.0
+      + API_BUILD=2.1.1
 ```
 
 ## Requirements
