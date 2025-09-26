@@ -7,24 +7,6 @@ export interface EnvUpdate {
     updated: string;
 }
 
-function getCurrentDate(): string {
-    return new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-}
-
-function incrementBuildNumber(value: string): string {
-    // Extract number from the value, default to 0 if not found
-    const match = value.match(/\d+/);
-    const currentNumber = match ? parseInt(match[0], 10) : 0;
-    const newNumber = currentNumber + 1;
-
-    // Replace the number in the original string, or append if no number found
-    if (match) {
-        return value.replace(/\d+/, newNumber.toString());
-    } else {
-        return value + newNumber.toString();
-    }
-}
-
 export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] {
     const updates: EnvUpdate[] = [];
 
@@ -54,17 +36,13 @@ export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] 
 
             // Update _MODIFIED variables with current date
             if (key.includes('_MODIFIED')) {
-                const currentDate = getCurrentDate();
+                const full = key.includes('_FULL') || key.includes('FULL_');
+                const currentDate = getCurrentDate(full);
                 updated = `${key}=${currentDate}`;
 
                 if (updated !== original) {
                     lines[i] = updated;
-                    updates.push({
-                        file: filePath,
-                        line: i + 1,
-                        original,
-                        updated
-                    });
+                    updates.push({ file: filePath, line: i + 1, original, updated });
                     modified = true;
                 }
             }
@@ -76,12 +54,7 @@ export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] 
 
                 if (updated !== original) {
                     lines[i] = updated;
-                    updates.push({
-                        file: filePath,
-                        line: i + 1,
-                        original,
-                        updated
-                    });
+                    updates.push({ file: filePath, line: i + 1, original, updated });
                     modified = true;
                 }
             }
@@ -102,4 +75,26 @@ export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] 
     }
 
     return updates;
+}
+
+function getCurrentDate(full: boolean): string {
+    if (full) {
+        return new Date().toISOString()
+    } else {
+        return new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+    }
+}
+
+function incrementBuildNumber(value: string): string {
+    // Extract number from the value, default to 0 if not found
+    const match = value.match(/\d+/);
+    const currentNumber = match ? parseInt(match[0], 10) : 0;
+    const newNumber = currentNumber + 1;
+
+    // Replace the number in the original string, or append if no number found
+    if (match) {
+        return value.replace(/\d+/, newNumber.toString());
+    } else {
+        return value + newNumber.toString();
+    }
 }
