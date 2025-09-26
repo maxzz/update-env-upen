@@ -2,36 +2,9 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { parseArguments, CLIOptions } from './arg';
-import { EnvUpdate, processEnvFile } from './parse-one-file';
-
-function findEnvFiles(directory: string): string[] {
-    const envFiles: string[] = [];
-
-    function searchDirectory(dir: string): void {
-        try {
-            const entries = fs.readdirSync(dir, { withFileTypes: true });
-
-            for (const entry of entries) {
-                const fullPath = path.join(dir, entry.name);
-
-                if (entry.isDirectory()) {
-                    // Skip node_modules and other common directories
-                    if (!['node_modules', '.git', 'dist', 'build', '.next'].includes(entry.name)) {
-                        searchDirectory(fullPath);
-                    }
-                } else if (entry.isFile() && entry.name.startsWith('.env')) {
-                    envFiles.push(fullPath);
-                }
-            }
-        } catch (error) {
-            console.error(`Error reading directory ${dir}:`, error);
-        }
-    }
-
-    searchDirectory(directory);
-    return envFiles;
-}
+import { type CLIOptions,parseArguments } from './1-arg';
+import { findEnvFiles } from './2-find-env-files';
+import { type EnvUpdate, processEnvFile } from './3-parse-one-file';
 
 function main(): void {
     try {

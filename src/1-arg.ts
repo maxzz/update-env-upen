@@ -1,5 +1,5 @@
-import { Command } from 'commander';
 import * as path from 'path';
+import { Command } from 'commander';
 
 export interface CLIOptions {
     folder: string;
