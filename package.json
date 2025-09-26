@@ -41,6 +41,7 @@
         "old:dev:tsc": "tsc -w",
         "old:build:tsx": "tsc",
         "old:test": "node dist/main.js",
-        "prepublishOnly": "pnpm run build"
+        "prepublishOnly": "pnpm run build",
+        "to-npm": "pnpm publish"
     }
 }

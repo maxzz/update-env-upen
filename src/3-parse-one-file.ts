@@ -36,8 +36,7 @@ export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] 
 
             // Update _MODIFIED variables with current date
             if (key.includes('_MODIFIED')) {
-                const full = key.includes('_FULL') || key.includes('FULL_');
-                const currentDate = getCurrentDate(full);
+                const currentDate = getCurrentDate();
                 updated = `${key}=${currentDate}`;
 
                 if (updated !== original) {
@@ -77,12 +76,8 @@ export function processEnvFile(filePath: string, verbose: boolean): EnvUpdate[] 
     return updates;
 }
 
-function getCurrentDate(full: boolean): string {
-    if (full) {
-        return new Date().toISOString()
-    } else {
-        return new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-    }
+function getCurrentDate(): string {
+    return new Date().toISOString();
 }
 
 function incrementBuildNumber(value: string): string {
