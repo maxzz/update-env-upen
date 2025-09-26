@@ -27,6 +27,7 @@
     "devDependencies": {
         "@types/node": "^20.0.0",
         "ts-node": "^10.9.2",
+        "tsup": "^8.5.0",
         "tsx": "^4.20.6",
         "typescript": "^5.0.0"
     },
@@ -35,11 +36,11 @@
     },
     "scripts": {
         "tsc": "tsc -w",
-        "build": "tsc",
-        "dev": "tsc --watch",
-        "dev:tsx": "tsx src/main.ts --verbose",
-        "prepublishOnly": "pnpm run build",
-        "test": "node dist/main.js",
-        "start": "node dist/main.js"
+        "dev": "tsx src/main.ts --verbose",
+        "build": "tsup src/main.ts --format cjs --dts --sourcemap --clean",
+        "old:dev:tsc": "tsc -w",
+        "old:build:tsx": "tsc",
+        "old:test": "node dist/main.js",
+        "prepublishOnly": "pnpm run build"
     }
 }
