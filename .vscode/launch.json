@@ -2,6 +2,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "CLI w/ tsx",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/main.ts",
+      "args": ["${workspaceFolder}", "--verbose"],
+      "runtimeExecutable": "tsx",
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "sourceMaps": false
+    },
+    {
       "name": "CLI",
       "type": "node",
       "request": "launch",
@@ -67,6 +83,22 @@
       "program": "${workspaceFolder}/src/main.ts",
       "args": ["--verbose"],
       "runtimeArgs": ["-r", "ts-node/register"],
+      "console": "integratedTerminal",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "sourceMaps": false
+    },
+    {
+      "name": "CLI w/ tsx",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/main.ts",
+      "args": ["--verbose"],
+      "runtimeExecutable": "tsx",
       "console": "integratedTerminal",
       "env": {
         "NODE_ENV": "development"

@@ -139,6 +139,9 @@ pnpm run build
 # Run in development mode (with file watching)
 pnpm run dev
 
+# Run TypeScript directly with tsx (fast development)
+pnpm run dev:tsx
+
 # Test the built CLI
 pnpm run test
 ```
@@ -166,16 +169,22 @@ upen/
 
 The project includes VS Code debug configurations in `.vscode/launch.json`:
 
-1. **Debug CLI**: Debug the compiled JavaScript with source maps (auto-builds before debugging)
-2. **Debug CLI with Custom Folder**: Debug with a specific target folder (auto-builds before debugging)  
-3. **Debug Built CLI**: Debug the compiled JavaScript version (auto-builds before debugging)
-4. **Debug TypeScript**: Debug TypeScript directly (requires installing `ts-node` as dev dependency)
+1. **CLI**: Debug the compiled JavaScript with source maps (auto-builds before debugging)
+2. **CLI w/ verbose**: Debug with verbose output (auto-builds before debugging)  
+3. **CLI w/ folder**: Debug with a specific target folder (auto-builds before debugging)
+4. **CLI w/ ts-node**: Debug TypeScript directly using ts-node (requires `ts-node` dev dependency)
+5. **CLI w/ tsx**: Debug TypeScript directly using tsx (faster alternative to ts-node)
+6. **CLI w/ tsx (custom folder)**: Debug with tsx and custom folder argument
 
 Press `F5` in VS Code to start debugging. The first three configurations will automatically build the project before debugging.
 
-To use the TypeScript debugging option, install ts-node:
+TypeScript debugging options:
 ```bash
+# ts-node (already installed)
 pnpm add -D ts-node
+
+# tsx (already installed, faster alternative)
+pnpm add -D tsx
 ```
 
 ### Building and Publishing
